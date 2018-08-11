@@ -20,7 +20,10 @@ def homepage(request):
 	user = request.user
 	totaData = DataModel.objects.all().count()
 	userAccount = MyUser.objects.get(user = user)
-	lastAddOn = DataModel.objects.latest('id')
+	try:
+		lastAddOn = DataModel.objects.latest('id')
+	except:
+		lastAddOn = None
 	notifications = NotificationMaster.objects.all().order_by('-id')
 	addsearches = addAsearch.objects.all().order_by('-id')
 	loadPort = list(set(DataModel.objects.values_list('loadPortDefinition', flat=True).distinct()))
